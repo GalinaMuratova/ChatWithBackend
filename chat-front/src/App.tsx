@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import './App.css'
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Container,
+    TextField,
+    Typography
+} from "@mui/material";
+import './App.css';
 import dayjs from "dayjs";
 
 const App = () => {
@@ -21,7 +31,7 @@ const App = () => {
                     method: 'POST',
                     body: data,
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type':'application/json'
                     }
                 });
                 if (response.ok) {
@@ -57,53 +67,68 @@ const App = () => {
 
 
     return (
-        <div className="container">
-            <h1 className="main-title">Chat App</h1>
-            <div className="content">
-                {allInfo.map((msg, index) => (
-                    <div key={index} className="block">
-                        <div className="card-header">
-                            <b>Author : </b> {msg.author}
-                            <span className='ms-5'><b>Data : </b>{dayjs(msg.datetime).format('DD.MM.YYYY HH:mm:ss')}</span>
-                        </div>
-                        <div className="card-body">
-                            <blockquote className="blockquote mb-0">
-                                <p>{msg.message}</p>
-                            </blockquote>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className="row">
-                <div className="col-md-12">
-                    <form onSubmit={sendMessage}>
-                        <div className="form-group">
-                            <label htmlFor="author">Author:</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="author"
+        <>
+            <Container>
+                <Typography variant="h3" gutterBottom className="main-title">
+                    Chat App
+                </Typography>
+                <Box className="content" sx={{ marginBottom:3}}>
+                    {allInfo.map((msg, index) => (
+                        <Card key={index} className="block">
+                            <CardHeader
+                                title={
+                                    <Typography variant="subtitle1">
+                                        <b>Author :</b>
+                                        <span> {msg.author}</span>
+                                    </Typography>
+                                }
+                                subheader={
+                                    <Typography variant="subtitle1">
+                                        <b>Date : </b>
+                                        <span>{dayjs(msg.datetime).format('DD.MM.YYYY HH:mm:ss')}</span>
+                                    </Typography>
+                                }
+                                sx={{ paddingLeft: 2, paddingRight: 2, margin: 0, paddingTop:0  }}
+                            />
+                            <CardContent sx={{ paddingLeft: 2, paddingRight: 2, margin: 0, paddingTop: 0, paddingBottom: 0}}>
+                                <Typography sx={{ paddingLeft: 3, paddingRight: 3, margin: 0, paddingTop: 2, paddingBottom: 2}} className='blockquote' variant="h6" >
+                                    {msg.message}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Box>
+                <Box className="row">
+                    <Box className="col-md-12">
+                        <form onSubmit={sendMessage}>
+                            <TextField
+                                required
+                                label="Author"
+                                variant="outlined"
+                                fullWidth
                                 value={author}
                                 onChange={(e) => setAuthor(e.target.value)}
+                                sx={{ marginBottom: 2 }}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="message">Message:</label>
-                            <textarea
-                                className="form-control"
-                                id="message"
+                            <TextField
+                                required
+                                label="Message"
+                                variant="outlined"
+                                fullWidth
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
-                            ></textarea>
-                        </div>
-                        <button type="submit" className="btn btn-primary">
-                            Send
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+                                sx={{ marginBottom: 2 }}
+                            />
+                            <Button type="submit" variant="contained" color="primary">
+                                Send
+                            </Button>
+                        </form>
+                    </Box>
+                </Box>
+            </Container>
+        </>
   );
+
 };
 
 export default App;

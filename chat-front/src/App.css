@@ -2,7 +2,7 @@
     max-width: 100%;
     max-height: 300px;
     overflow: auto;
-    box-shadow: 0 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+    border: 1px solid rgba(128, 128, 128, 0.43);
 }
 
 .main-title {
@@ -15,6 +15,7 @@
     border-radius: 6px;
     padding: 15px;
     margin: 25px 20px;
+    box-shadow: 0 0 7px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
 }
 
 .blockquote {
