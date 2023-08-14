@@ -21,8 +21,6 @@ const fileDb = {
         }
         const end = data.length - 1;
         const begin = end - 29;
-        console.log(end); 1
-        console.log(begin); -29
         return data.slice(begin, end + 1);
     },
     async sendMessage(item: MessageMutation) {

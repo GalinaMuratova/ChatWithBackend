@@ -4,7 +4,7 @@ import {MessageMutation} from "../types";
 const chatMessagesRouter = express.Router();
 
 chatMessagesRouter.get('/', async (req, res) => {
-    if (typeof req.query.datetime) {
+    if (req.query.datetime) {
         const queryDate = req.query.datetime as string
         const requestedDatetime = new Date(queryDate);
 
@@ -18,6 +18,10 @@ chatMessagesRouter.get('/', async (req, res) => {
             return messageDatetime > requestedDatetime;
         });
 
+        if (newMessages.length === 0) {
+            return res.send([]);
+        }
+
         res.send(newMessages);
     } else {
         const messages = await fileDb.getMessages();
@@ -29,7 +33,6 @@ chatMessagesRouter.post('/', async (req, res) => {
     if (!req.body.message || !req.body.author) {
         return res.status(400).send({"error": "Author and message must be present in the request"});
     }
-
     const message: MessageMutation = {
         message: req.body.message,
         author: req.body.author,
